@@ -1,0 +1,62 @@
+server:
+  port: 9222
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 8.130.18.213:8848
+
+    gateway:
+      routes:
+        - id: service-hosp1
+          uri: lb://service-hosp
+          predicates:
+            - Path=/*/hospital/**  # hospital
+
+        - id: service-hosp2
+          uri: lb://service-hosp
+          predicates:
+            - Path=/*/hosp/**
+
+        - id: service-hosp3
+          uri: lb://service-hosp
+          predicates:
+            - Path=/*/user/**
+
+        - id: service-cmn
+          uri: lb://service-cmn
+          predicates:
+            - Path=/*/cmn/**
+
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Path=/*/userinfo/**
+
+        - id: service-sms
+          uri: lb://service-sms
+          predicates:
+            - Path=/*/sms/**
+
+        - id: service-oss
+          uri: lb://service-oss
+          predicates:
+            - Path=/*/oss/**
+
+        - id: service-order
+          uri: lb://service-order
+          predicates:
+            - Path=/*/order/**
+        - id: service-statistic
+          uri: lb://service-statistic
+          predicates:
+            - Path=/*/statistic/**
+
+        # 兜底服务
+        - id: service-cmn4
+          uri: lb://service-cmn
+          predicates:
+            - Path=/**
+  application:
+    name: service-gateway
